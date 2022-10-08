@@ -1,26 +1,22 @@
+import { useEffect, useState } from 'react'
+
 import styles from '../styles/Home.module.css'
 
 export default function Dashboard() {
-    const incCard = {
-        id: 1,
-        title: 'Hello',
-        description: 'Incomplete Todo',
+    const [data , setData ] = useState([{
+        title: "Loading...",
+        description: "Loading...",
         completed: false,
-        createdBy: 'Admin'
-    }
+        createBy: "Loading..."
+    }])
 
-    const compCard = {
-        id: 2,
-        title: 'World',
-        description: 'Completed Todo',
-        completed: true,
-        createdBy: 'Admin'
-    }
-
-    const data = [
-        incCard,
-        compCard
-    ]
+    useEffect(() => {
+        fetch('/api/todo')
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data.data)
+            })
+    }, [])
 
     return (
         <div>
@@ -31,14 +27,14 @@ export default function Dashboard() {
 
                 <div className={styles.grid}>
                     {
-                    data.map( (todo) => (
-                        <div className={styles.card} key={todo.id}>
-                            <h2>{todo.title}</h2>
-                            <p>{todo.description}</p>
-                            <p1> 
-                                Completed : <input type="checkbox" disabled={true} checked={todo.completed}></input>
-                            </p1>
-                        </div>
+                        data.map( (todo) => (
+                            <div key={todo.id} className={styles.card}>
+                                <h2>{todo.title}</h2>
+                                <p>{todo.description}</p>
+                                <p1> 
+                                    Completed : <input type="checkbox" disabled={true} checked={todo.completed}></input>
+                                </p1>
+                            </div>
                         )
                     )}
                 </div>
