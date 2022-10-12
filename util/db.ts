@@ -2,6 +2,8 @@ import mongoose, { Model } from "mongoose"
 
 const DATABASE_URL : string = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_CLUSTER}/${process.env.MONGO_DB}?retryWrites=true&w=majority`
 
+console.log(`DB_URL : ${DATABASE_URL}`)
+
 export const connect = async () => {
   const conn = await mongoose
     .connect(DATABASE_URL as string)
@@ -10,8 +12,8 @@ export const connect = async () => {
   const TodoSchema = new mongoose.Schema({
     title: String,
     description: String,
-    createdBy: Number,
     completed: Boolean,
+    createdBy: Number,
   })
 
   const UserSchema = new mongoose.Schema({

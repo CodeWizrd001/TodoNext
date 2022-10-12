@@ -17,8 +17,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         PUT: async (req: NextApiRequest, res: NextApiResponse) => {
             const { Todo } = await connect()
             res.json(
-                await Todo.findByIdAndUpdate(id, req.body, { new: true }).catch(catcher)
-        )
+                await Todo.findByIdAndUpdate(id, JSON.parse(req.body), { new: true }).catch(catcher)
+            )
         },
         DELETE: async (req: NextApiRequest, res: NextApiResponse) => {
             const { Todo } = await connect()

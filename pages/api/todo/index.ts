@@ -14,8 +14,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         POST: async (req: NextApiRequest, res: NextApiResponse) => {
             const { Todo } = await connect()
-            res.json(await Todo.create(req.body).catch(catcher))
-        },
+            const data = JSON.parse(req.body)
+            res.json(await Todo.create(data))
+        }
     }
 
     const response = handleCase[method]
