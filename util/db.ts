@@ -12,8 +12,8 @@ export const connect = async () => {
   const TodoSchema = new mongoose.Schema({
     title: String,
     description: String,
-    createdBy: Number,
     completed: Boolean,
+    createdBy: Number,
   })
 
   const UserSchema = new mongoose.Schema({

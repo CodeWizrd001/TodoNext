@@ -11,47 +11,55 @@ interface IndexProps {
 function Index(props: IndexProps) {
   const { todos } = props
 
-  const newTodo = {
+  const [todo,setTodo] = useState({
     title:"",
     description:"",
     completed:false,
     createdBy:0
-  }
+  })
 
   const addTodo = function() {
     const requestOptions : RequestInit = {
       method: "POST",
-      body: JSON.stringify(newTodo)
+      body: JSON.stringify(todo)
     }
-    console.log(newTodo)
-    fetch(process.env.API_URL+"/todo",requestOptions)
+    console.log(todo)
+    fetch("/api/todo",requestOptions)
       .then((response)=>response.json()
         .then((data)=>{
-          console.log(data)
+          setTodo({title:"",description:"",completed:false,createdBy:0})
         }))
   }
 
   const changeTitle = function(e:any) {
-    newTodo.title = e.target.value
-    e.target.value = newTodo.title
-    console.log(newTodo)
+    const updatedTodo = {...todo,title:e.target.value}
+    setTodo(updatedTodo)
   }
 
   const changeDescription = function(e:any) {
-    newTodo.description = e.target.value
-    e.target.value = newTodo.description
-    console.log(newTodo)
+    const updatedTodo = {...todo,description:e.target.value}
+    setTodo(updatedTodo)
   }
 
   const changeChecked = function(e:any) {
-    newTodo.completed = e.target.checked
-    e.target.checked = newTodo.completed
+    const updatedTodo = {...todo,completed:e.target.checked}
+    setTodo(updatedTodo)
   }
 
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid}>
+          <div key="new">
+            <Link href="/dashboard">
+              <div className={styles.card}>
+                <input value={todo.title} onChange={changeTitle}></input>
+                <input value={todo.description} onChange={changeDescription}></input>
+                <input type="checkbox" checked={todo.completed} onChange={changeChecked}></input>
+                <button onClick={addTodo}>Add</button>  
+              </div>
+            </Link>
+          </div>
           {todos.map((t:Todo) => (
             <div key={t._id}>
               <Link href="/dashboard">
@@ -63,18 +71,6 @@ function Index(props: IndexProps) {
               </Link> 
             </div>
           ))}
-          <div key="new">
-            <Link href="/dashboard">
-              <div className={styles.card}>
-                <input value={newTodo.title} onChange={changeTitle}></input>
-                <input value={newTodo.description} onChange={changeDescription}></input>
-                <input type="checkbox" checked={newTodo.completed} onChange={changeChecked}></input>
-                <button onClick={addTodo}>Add</button>
-                <p>{newTodo.title}</p>
-                <p>{newTodo.description}</p>
-              </div>
-            </Link>
-          </div>
         </div>
       </main>
     </div>  
