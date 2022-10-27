@@ -8,16 +8,16 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome User!
+        <h1>
+         <strong> Welcome User!</strong>
         </h1>
 
         <div className={styles.grid}>
           <Link href="/dashboard">
-            <div className={styles.card}>
+            <button >
               <h2>Dashboard</h2>
-              <p>Enter User Dashboard</p>
-            </div>
+              <p>Enter the User Dashboard</p>
+            </button>
           </Link>
         </div>
       </main>
